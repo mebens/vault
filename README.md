@@ -1,6 +1,6 @@
 # Description
 
-Vault is a small data storage library for [LÖVE](http://love2d.org/). It take native Lua types, and stores them in a file, ready for retrieval.
+Vault is a small persistent data storage library for [LÖVE](http://love2d.org/). It takes native Lua types, and stores them in a file, ready for retrieval.
 
 Vault is licensed under the zlib/libpng license. See LICENSE.txt for the license itself.
 
