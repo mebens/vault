@@ -29,13 +29,33 @@ And to save the data:
 
     Vault.save()
     
-We can also specify the data all in one go, by using a table:
+An alternative way of calling <code>Vault.set</code> is by using this syntax:
+
+    Vault['somekey'] = 3
+    ...
+    Vault[3] = false
+    
+There are two things to note about this. One is that you can't specify a specific file while doing this (you must use <code>Vault.file</code>), and two is that you can't use a key of anything belong to the <code>Vault</code> module. Here's a list of the string keys:
+
+* fileData
+* file
+* load
+* data
+* get
+* set
+* save
+* \__index
+* \__newindex
+* \_getTableString
+* \_getString
+
+Another way to save data is to specify the data all in one go, by using a table, which is passed to <code>Vault.save</code>:
 
     Vault.save({ somekey = 3, another = { foo = 3, bar = 4 }, something = nil, [3] = false })
     
 ## Loading Data
 
-Probably the easiest way to get all the data is by using <code>Vault.data</code>:
+The easiest way to get all the data is by using <code>Vault.data</code>:
 
     Vault.data() -- { somekey = 3, ... }
     
@@ -47,6 +67,12 @@ If you just want to get a specific key, you can use <code>Vault.get</code>, like
     Vault.get('another') -- { foo = 3, bar = 4 }
     
 If the data hasn't been already loaded, <code>Vault.get</code> will do it automatically.
+
+Similar to <code>Vault.set</code>, an alternate way to call <code>Vault.get</code> is by using this syntax:
+
+    Vault['somekey'] -- 3
+
+Take note that the same limitations apply as with the <code>Vault[key] = v</code> syntax.
 
 ## Conclusion
 
