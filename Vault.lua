@@ -1,9 +1,11 @@
 Vault = {}
-Vault.file = 'data'
 Vault.fileData = {}
 
--- loads the data from the data file
--- returns the data
+-- Set this to change the default file
+Vault.file = 'data'
+
+-- Loads the data from the data file
+-- returns the data, or nil on failure
 function Vault.load(file)
   file = file or Vault.file
   
@@ -17,7 +19,7 @@ function Vault.load(file)
   end
 end
 
--- gets the data from the data, however it caches it,
+-- Gets the data from the data file, however it caches it,
 -- and doesn't reload it every time
 -- returns the data
 function Vault.data(file)
@@ -30,6 +32,9 @@ function Vault.data(file)
   end
 end
 
+-- Gets a key from the data file. It will load the data if
+-- this hasn't already been done.
+-- returns the value of the key
 function Vault.get(key, file)
   file = file or Vault.file
   
@@ -40,6 +45,8 @@ function Vault.get(key, file)
   return Vault.fileData[file][key]
 end
 
+-- Sets a key to the value specified. It will load the data
+-- if this hasn't already been done.
 function Vault.set(key, value, file)
   file = file or Vault.file
   
@@ -50,6 +57,10 @@ function Vault.set(key, value, file)
   Vault.fileData[file][key] = value
 end
 
+-- Writes the data out to the file. You can also pass in a
+-- table as the complete set of data, instead of using
+-- Vault.set.
+-- returns a boolean indicating success
 function Vault.save(data, file)
   file = file or Vault.file
   if type(data) == 'string' then file = data end
@@ -84,9 +95,7 @@ end
 function Vault._getString(value)
   local t = type(value)
   
-  if t == 'nil' then
-    return 'nil'
-  elseif t == 'number' then
+  if t == 'number' then
     return tostring(value)
   elseif t == 'string' then
     return '"' .. value .. '"'
@@ -95,8 +104,8 @@ function Vault._getString(value)
   elseif t == 'table' then
     return Vault._getTableString(value)
   else
-    -- is there a way to do userdata?
-    error('Unable to save type: ' + t)
+    -- just return nil is more friendly than a scaring error message :P
+    return 'nil'
   end
 end
 
